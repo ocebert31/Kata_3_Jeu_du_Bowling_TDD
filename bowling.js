@@ -8,11 +8,14 @@
 
 // sum.js
 
-function sum(a, b) {
-    return a + b;
+function countPoints(pins) {
+    let score = 0;
+    if (pins === 0) {
+        return score += 0;
+    }
 }
  
-module.exports = sum;
+module.exports = countPoints;
   
 
   

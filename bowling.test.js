@@ -1,6 +1,9 @@
-// sum.test.js
-const sum = require('./bowling');
+const countPoints = require('./bowling');
 
-test('adds 1 + 2 to equal 3', () => {
-    expect(sum(1, 2)).toBe(3);
+test('0 points when the game has just started', () => {
+    expect(countPoints(0)).toBe(0);
+});
+
+test('number of points when X pins fall', () => {
+    expect(countPoints(5)).toBe(5);
 });
