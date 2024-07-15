@@ -6,8 +6,6 @@
 // Si 10e frame fait un spare => un lancé supplémentaire
 // Si 10e frame fait strike => deux lancés supplémentaire
 
-// sum.js
-
 function reset() {
     jeu = [];
 }
@@ -17,7 +15,9 @@ function score() {
     jeu.forEach((frame, index) => {
         score += frameScore(frame);
         let nextFrame = jeu[index + 1];
-        if(frameIsSpare(frame) && nextFrame) {
+        if(frameIsStrike(frame) && nextFrame) {
+            score += nextFrame.firstThrow + nextFrame.secondThrow || 0
+        } else if(frameIsSpare(frame) && nextFrame) {
             score += nextFrame.firstThrow;
         }
     });
@@ -27,14 +27,18 @@ function score() {
 function throwPins(pins) {
     let lastFrame = jeu[jeu.length - 1];
     if (!lastFrame || frameIsComplete(lastFrame)) {
-        jeu.push({firstThrow: pins});
+        let newFrame = { firstThrow: pins };
+        jeu.push(newFrame);
+        if (frameIsStrike(newFrame)) {
+            newFrame.secondThrow = 0;
+        }
     } else {
         lastFrame.secondThrow = pins;
     }
 }
 
 function frameIsComplete(frame) {
-    return frame.secondThrow;
+    return frame.secondThrow || frameIsStrike(frame);
 }
 
 function frameScore(frame) {
@@ -43,6 +47,10 @@ function frameScore(frame) {
 
 function frameIsSpare(frame) {
     return frame.firstThrow < 10 && frameScore(frame) === 10;
+}
+
+function frameIsStrike(frame) {
+    return frame.firstThrow === 10;
 }
  
 module.exports = { score: score, throwPins: throwPins, reset: reset};

@@ -30,12 +30,13 @@ test('spare gives 28 points and there is juste ONE frame', () => {
     console.log(jeu)
 });
 
-test('strike gives 10 poiints with juste one throw', () => {
+test('strike gives 10 points with juste one throw', () => {
     bowling.throwPins(10);
     bowling.throwPins(5);
     bowling.throwPins(3);
-    expect(bowling.score()).toBe(26);
     console.log(jeu)
+    expect(bowling.score()).toBe(26);
+    
 });
 
 
