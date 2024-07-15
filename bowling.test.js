@@ -36,44 +36,16 @@ test('strike gives 10 points with juste one throw', () => {
 });  
 
 test('10e frames is spare, gives one throw', () => {
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    bowling.throwPins(5);
-    console.log(jeu)
+    for (let i = 0; i < 21; i ++) {
+        bowling.throwPins(5);
+    }
     expect(bowling.score()).toBe(150);  
 }); 
 
 test('10e frames is strike, gives two throws', () => {
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
-    bowling.throwPins(10);
+    for (let i = 0; i < 12; i ++) {
+        bowling.throwPins(10);
+    }
     expect(bowling.score()).toBe(300);  
 })
 

@@ -11,24 +11,35 @@ function reset() {
 }
 
 function score() {
-    let score = 0
+    let score = 0;
     jeu.forEach((frame, index) => {
         if (index >= 10) {
             return;
         }
         score += frameScore(frame);
-        let nextFrame = jeu[index + 1];
-        let afterNextFrame = jeu[index + 2]
-        if(frameIsStrike(frame) && nextFrame) {
-            score += frameScore(nextFrame);
-            if(frameIsStrike(nextFrame) && afterNextFrame) {
-                score += afterNextFrame.firstThrow
-            }
-        } else if(frameIsSpare(frame) && nextFrame) {
-            score += nextFrame.firstThrow;
-        }
+        score += addBonus(frame, index);
     });
-    return score
+    return score;
+}
+
+function addBonus(frame, index) {
+    let nextFrame = jeu[index + 1];
+    let afterNextFrame = jeu[index + 2];
+    let bonus = 0;
+    if(frameIsStrike(frame) && nextFrame) {
+        bonus += frameScore(nextFrame);
+        bonus += consecutiveStrike(nextFrame, afterNextFrame);
+    } else if(frameIsSpare(frame) && nextFrame) {
+        bonus += nextFrame.firstThrow;
+    }
+    return bonus;
+}
+
+function consecutiveStrike(nextFrame, afterNextFrame) {
+    if(frameIsStrike(nextFrame) && afterNextFrame) {
+        return afterNextFrame.firstThrow;
+    }
+    return 0;
 }
 
 function throwPins(pins) {
@@ -36,11 +47,15 @@ function throwPins(pins) {
     if (!lastFrame || frameIsComplete(lastFrame)) {
         let newFrame = { firstThrow: pins };
         jeu.push(newFrame);
-        if (frameIsStrike(newFrame)) {
-            newFrame.secondThrow = 0;
-        }
+        scoreFrameWhenIsStrike(newFrame);
     } else {
         lastFrame.secondThrow = pins;
+    }
+}
+
+function scoreFrameWhenIsStrike(newFrame) {
+    if (frameIsStrike(newFrame)) {
+        newFrame.secondThrow = 0;
     }
 }
 
