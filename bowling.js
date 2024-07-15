@@ -13,10 +13,17 @@ function reset() {
 function score() {
     let score = 0
     jeu.forEach((frame, index) => {
+        if (index >= 10) {
+            return;
+        }
         score += frameScore(frame);
         let nextFrame = jeu[index + 1];
+        let afterNextFrame = jeu[index + 2]
         if(frameIsStrike(frame) && nextFrame) {
-            score += nextFrame.firstThrow + nextFrame.secondThrow || 0
+            score += frameScore(nextFrame);
+            if(frameIsStrike(nextFrame) && afterNextFrame) {
+                score += afterNextFrame.firstThrow
+            }
         } else if(frameIsSpare(frame) && nextFrame) {
             score += nextFrame.firstThrow;
         }
